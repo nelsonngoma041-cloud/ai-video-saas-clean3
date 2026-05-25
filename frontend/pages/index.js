@@ -8,7 +8,7 @@ export default function Home() {
   const generate = async () => {
 
     const response = await fetch(
-      http://ai-video-saas-clean3-production.up.railway.app/generate?topic=" + topic,
+      "http://ai-video-saas-clean3-production.up.railway.app/generate?topic=" + topic,
       {
         method: "POST"
       }
