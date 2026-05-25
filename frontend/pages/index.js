@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div>
+    <div style={{ padding: 40 }}>
       <h1>AI Video SaaS Running</h1>
     </div>
   );
