@@ -1,0 +1,18 @@
+import uuid
+import os
+
+def generate_video(script, voice):
+
+    output = f"{uuid.uuid4()}.mp4"
+
+    command = f"""
+    ffmpeg -y \
+    -f lavfi -i color=c=black:s=1080x1920:d=8 \
+    -i {voice} \
+    -vf "drawtext=text='{script[:80]}':fontcolor=white:fontsize=48:x=(w-text_w)/2:y=(h-text_h)/2" \
+    -c:v libx264 -c:a aac -shortest {output}
+    """
+
+    os.system(command)
+
+    return output

@@ -1,0 +1,26 @@
+import json
+import os
+
+FILE = "videos.json"
+
+def save_video(user, topic, script, video):
+
+    data = []
+
+    if os.path.exists(FILE):
+        with open(FILE, "r") as f:
+            data = json.load(f)
+
+    entry = {
+        "user": user,
+        "topic": topic,
+        "script": script,
+        "video": video
+    }
+
+    data.append(entry)
+
+    with open(FILE, "w") as f:
+        json.dump(data, f)
+
+    return entry
