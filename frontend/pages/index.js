@@ -1,14 +1,12 @@
 import { useState } from "react";
 
 export default function Home() {
-
   const [topic, setTopic] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const generate = async () => {
-
     if (!topic) {
       setError("Please enter a topic");
       return;
@@ -19,14 +17,14 @@ export default function Home() {
     setResult(null);
 
     try {
-
       const response = await fetch(
-        "https://ai-video-saas-clean3-production.up.railway.app/generate?topic=" + encodeURIComponent(topic),
+        "https://ai-video-saas-clean3-production.up.railway.app/generate?topic=" +
+          encodeURIComponent(topic),
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
 
@@ -37,16 +35,11 @@ export default function Home() {
       const data = await response.json();
 
       setResult(data);
-
     } catch (err) {
-
       console.error(err);
       setError("Something went wrong connecting to backend");
-
     } finally {
-
       setLoading(false);
-
     }
   };
 
@@ -56,18 +49,14 @@ export default function Home() {
         padding: 40,
         fontFamily: "Arial",
         maxWidth: 700,
-        margin: "0 auto"
+        margin: "0 auto",
       }}
     >
-
       <h1>AI Video SaaS</h1>
 
-      <p>
-        Generate AI video scripts instantly.
-      </p>
+      <p>Generate AI video scripts instantly.</p>
 
       <div style={{ marginTop: 20 }}>
-
         <input
           type="text"
           placeholder="Enter video topic..."
@@ -78,7 +67,7 @@ export default function Home() {
             width: "70%",
             marginRight: 10,
             borderRadius: 8,
-            border: "1px solid #ccc"
+            border: "1px solid #ccc",
           }}
         />
 
@@ -88,12 +77,11 @@ export default function Home() {
             padding: "12px 20px",
             borderRadius: 8,
             border: "none",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           Generate
         </button>
-
       </div>
 
       {loading && (
@@ -103,10 +91,12 @@ export default function Home() {
       )}
 
       {error && (
-        <p style={{
-          marginTop: 20,
-          color: "red"
-        }}>
+        <p
+          style={{
+            marginTop: 20,
+            color: "red",
+          }}
+        >
           {error}
         </p>
       )}
@@ -117,10 +107,9 @@ export default function Home() {
             marginTop: 30,
             padding: 20,
             border: "1px solid #ddd",
-            borderRadius: 10
+            borderRadius: 10,
           }}
         >
-
           <h2>Generated Result</h2>
 
           <p>
@@ -134,10 +123,8 @@ export default function Home() {
           <p>
             <strong>Video:</strong> {result.video}
           </p>
-
         </div>
       )}
-
     </div>
   );
 }
