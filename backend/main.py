@@ -1,10 +1,16 @@
 from fastapi import FastAPI
-from core.script import generate_script
-from core.voice import generate_voice
-from core.video import generate_video
-from core.storage import save_video
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Allow frontend requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def home():
@@ -12,7 +18,9 @@ def home():
 
 @app.post("/generate")
 def generate(topic: str):
-    script = generate_script(topic)
-    voice = generate_voice(script)
-    video = generate_video(script, voice)
-    return save_video("user1", topic, script, video)
+
+    return {
+        "topic": topic,
+        "script": f"Video about {topic}",
+        "video": "video.mp4"
+    }
