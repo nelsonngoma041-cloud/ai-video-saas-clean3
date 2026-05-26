@@ -106,6 +106,42 @@ export default function Home() {
         </div>
 
         {result && (
+  <div
+    style={{
+      marginTop: 40,
+      background: "#1e293b",
+      padding: 30,
+      borderRadius: 20,
+      textAlign: "left",
+    }}
+  >
+    <h2>Generated Result</h2>
+
+    <p>
+      <strong>Topic:</strong> {result.topic}
+    </p>
+
+    <div
+      style={{
+        marginTop: 20,
+        whiteSpace: "pre-wrap",
+        lineHeight: 1.8,
+      }}
+    >
+      <strong>Script:</strong>
+
+      <p>{result.script}</p>
+    </div>
+
+    <p
+      style={{
+        marginTop: 20,
+      }}
+    >
+      <strong>Video:</strong> {result.video}
+    </p>
+  </div>
+)}
           <div
             style={{
               marginTop: 40,
