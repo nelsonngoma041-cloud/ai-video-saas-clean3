@@ -4,16 +4,11 @@ export default function Home() {
   const [topic, setTopic] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const generate = async () => {
-    if (!topic) {
-      setError("Please enter a topic");
-      return;
-    }
+    if (!topic) return;
 
     setLoading(true);
-    setError("");
     setResult(null);
 
     try {
@@ -22,109 +17,137 @@ export default function Home() {
           encodeURIComponent(topic),
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
         }
       );
-
-      if (!response.ok) {
-        throw new Error("Backend request failed");
-      }
 
       const data = await response.json();
 
       setResult(data);
-    } catch (err) {
-      console.error(err);
-      setError("Something went wrong connecting to backend");
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      console.error(error);
     }
+
+    setLoading(false);
   };
 
   return (
     <div
       style={{
-        padding: 40,
+        background: "#0f172a",
+        minHeight: "100vh",
+        color: "white",
         fontFamily: "Arial",
-        maxWidth: 700,
-        margin: "0 auto",
+        padding: "40px 20px",
       }}
     >
-      <h1>AI Video SaaS</h1>
-
-      <p>Generate AI video scripts instantly.</p>
-
-      <div style={{ marginTop: 20 }}>
-        <input
-          type="text"
-          placeholder="Enter video topic..."
-          value={topic}
-          onChange={(e) => setTopic(e.target.value)}
+      <div
+        style={{
+          maxWidth: 900,
+          margin: "0 auto",
+          textAlign: "center",
+        }}
+      >
+        <h1
           style={{
-            padding: 12,
-            width: "70%",
-            marginRight: 10,
-            borderRadius: 8,
-            border: "1px solid #ccc",
-          }}
-        />
-
-        <button
-          onClick={generate}
-          style={{
-            padding: "12px 20px",
-            borderRadius: 8,
-            border: "none",
-            cursor: "pointer",
+            fontSize: 48,
+            marginBottom: 10,
           }}
         >
-          Generate
-        </button>
-      </div>
+          AI Video SaaS
+        </h1>
 
-      {loading && (
-        <p style={{ marginTop: 20 }}>
-          Generating...
-        </p>
-      )}
-
-      {error && (
         <p
           style={{
-            marginTop: 20,
-            color: "red",
+            color: "#94a3b8",
+            fontSize: 18,
+            marginBottom: 40,
           }}
         >
-          {error}
+          Generate viral AI video scripts instantly
         </p>
-      )}
 
-      {result && (
         <div
           style={{
-            marginTop: 30,
-            padding: 20,
-            border: "1px solid #ddd",
-            borderRadius: 10,
+            display: "flex",
+            gap: 10,
+            justifyContent: "center",
+            flexWrap: "wrap",
           }}
         >
-          <h2>Generated Result</h2>
+          <input
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+            placeholder="Enter your video topic..."
+            style={{
+              padding: 15,
+              width: 350,
+              borderRadius: 12,
+              border: "none",
+              outline: "none",
+              fontSize: 16,
+            }}
+          />
 
-          <p>
-            <strong>Topic:</strong> {result.topic}
-          </p>
-
-          <p>
-            <strong>Script:</strong> {result.script}
-          </p>
-
-          <p>
-            <strong>Video:</strong> {result.video}
-          </p>
+          <button
+            onClick={generate}
+            style={{
+              padding: "15px 25px",
+              borderRadius: 12,
+              border: "none",
+              background: "#3b82f6",
+              color: "white",
+              cursor: "pointer",
+              fontSize: 16,
+              fontWeight: "bold",
+            }}
+          >
+            {loading ? "Generating..." : "Generate"}
+          </button>
         </div>
-      )}
+
+        {result && (
+          <div
+            style={{
+              marginTop: 40,
+              background: "#1e293b",
+              padding: 30,
+              borderRadius: 20,
+              textAlign: "left",
+            }}
+          >
+            <h2
+              style={{
+                marginBottom: 20,
+              }}
+            >
+              Generated Result
+            </h2>
+
+            <p>
+              <strong>Topic:</strong> {result.topic}
+            </p>
+
+            <p
+              style={{
+                marginTop: 20,
+                lineHeight: 1.7,
+              }}
+            >
+              <strong>Script:</strong>
+              <br />
+              {result.script}
+            </p>
+
+            <p
+              style={{
+                marginTop: 20,
+              }}
+            >
+              <strong>Video:</strong> {result.video}
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
