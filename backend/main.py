@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from openai import OpenAI
 import os
+import requests
 
 app = FastAPI()
 
@@ -58,9 +59,40 @@ ENDING:
 Your breakthrough may be closer than you think.
 """
 
+    voice_url = "Voice generation failed"
+
+    try:
+
+        eleven_url = "https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL"
+
+        headers = {
+            "xi-api-key": os.getenv("ELEVENLABS_API_KEY"),
+            "Content-Type": "application/json"
+        }
+
+        data = {
+            "text": script,
+            "model_id": "eleven_multilingual_v2"
+        }
+
+        response = requests.post(
+            eleven_url,
+            json=data,
+            headers=headers
+        )
+
+        if response.status_code == 200:
+
+            voice_url = "AI voice generated successfully"
+
+    except Exception:
+
+        pass
+
     return {
         "topic": topic,
         "script": script,
-        "voice": "AI voice coming next",
+        "voice": voice_url,
         "video": "video.mp4"
+    }
     }
