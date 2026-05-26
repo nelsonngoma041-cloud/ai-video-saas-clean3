@@ -138,7 +138,13 @@ export default function Home() {
         marginTop: 20,
       }}
     >
-      <strong>Video:</strong> {result.video}
+      <p style={{ marginTop: 20 }}>
+  <strong>Voice:</strong> {result.voice}
+</p>
+
+<p style={{ marginTop: 20 }}>
+  <strong>Video:</strong> {result.video}
+</p>
     </p>
   </div>
 )}
