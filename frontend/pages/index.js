@@ -131,22 +131,15 @@ export default function Home() {
       <strong>Script:</strong>
 
       <p>{result.script}</p>
-    </div>
+    <<div style={{ marginTop: 20 }}>
+  <p>
+    <strong>Voice:</strong> {result.voice}
+  </p>
 
-    <p
-      style={{
-        marginTop: 20,
-      }}
-    >
-      <p style={{ marginTop: 20 }}>
-  <strong>Voice:</strong> {result.voice}
-</p>
-
-<p style={{ marginTop: 20 }}>
-  <strong>Video:</strong> {result.video}
-</p>
-    </p>
-  </div>
+  <p style={{ marginTop: 10 }}>
+    <strong>Video:</strong> {result.video}
+  </p>
+</div>
 )}
           <div
             style={{
