@@ -45,6 +45,44 @@ def generate(topic: str):
 
         script = response.choices[0].message.content
 
+    except Exception:
+
+        script = f"""
+HOOK:
+You are not behind in life.
+
+BODY:
+Everyone grows at different speeds.
+Keep trusting God and keep moving forward even when progress feels slow.
+
+ENDING:
+Your breakthrough may be closer than you think.
+"""
+
+    return {
+        "topic": topic,
+        "script": script,
+        "video": "video.mp4"
+    }
+
+    try:
+
+        response = client.chat.completions.create(
+            model="gpt-4.1-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You create short viral TikTok video scripts."
+                },
+                {
+                    "role": "user",
+                    "content": f"Create a TikTok script about {topic}"
+                }
+            ]
+        )
+
+        script = response.choices[0].message.content
+
         return {
             "topic": topic,
             "script": script,
