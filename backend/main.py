@@ -58,8 +58,8 @@ Keep trusting God and keep moving forward.
 ENDING:
 Your breakthrough may be closer than you think.
 """
-
-    voice_url = "Voice generation failed"
+  
+voice_url = "Voice generation failed"
 
     try:
 
@@ -94,5 +94,4 @@ Your breakthrough may be closer than you think.
         "script": script,
         "voice": voice_url,
         "video": "video.mp4"
-    }
     }
