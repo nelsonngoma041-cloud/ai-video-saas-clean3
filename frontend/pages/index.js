@@ -106,41 +106,6 @@ export default function Home() {
         </div>
 
         {result && (
-  <div
-    style={{
-      marginTop: 40,
-      background: "#1e293b",
-      padding: 30,
-      borderRadius: 20,
-      textAlign: "left",
-    }}
-  >
-    <h2>Generated Result</h2>
-
-    <p>
-      <strong>Topic:</strong> {result.topic}
-    </p>
-
-    <div
-      style={{
-        marginTop: 20,
-        whiteSpace: "pre-wrap",
-        lineHeight: 1.8,
-      }}
-    >
-      <strong>Script:</strong>
-
-      <p>{result.script}</p>
-    <<div style={{ marginTop: 20 }}>
-  <p>
-    <strong>Voice:</strong> {result.voice}
-  </p>
-
-  <p style={{ marginTop: 10 }}>
-    <strong>Video:</strong> {result.video}
-  </p>
-</div>
-)}
           <div
             style={{
               marginTop: 40,
@@ -150,39 +115,13 @@ export default function Home() {
               textAlign: "left",
             }}
           >
-            <h2
-              style={{
-                marginBottom: 20,
-              }}
-            >
-              Generated Result
-            </h2>
+            <h2>Generated Result</h2>
 
             <p>
               <strong>Topic:</strong> {result.topic}
             </p>
 
-            <p
+            <div
               style={{
                 marginTop: 20,
-                lineHeight: 1.7,
-              }}
-            >
-              <strong>Script:</strong>
-              <br />
-              {result.script}
-            </p>
-
-            <p
-              style={{
-                marginTop: 20,
-              }}
-            >
-              <strong>Video:</strong> {result.video}
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+                whiteSpace
