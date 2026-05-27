@@ -98,7 +98,7 @@ Your breakthrough may be closer than you think.
 
         else:
 
-    voice_url = response.text
+    voice_url = f"ElevenLabs Error {response.status_code}"
 
     except Exception as e:
 
