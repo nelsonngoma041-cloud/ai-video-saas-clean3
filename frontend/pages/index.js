@@ -139,30 +139,3 @@ export default function Home() {
               </p>
 
               <a
-                href={result.voice}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "#60a5fa",
-                  wordBreak: "break-all",
-                }}
-              >
-                {result.voice}
-              </a>
-
-              <div style={{ marginTop: 20 }}>
-                <audio controls style={{ width: "100%" }}>
-                  <source src={result.voice} type="audio/mpeg" />
-                </audio>
-              </div>
-
-              <p style={{ marginTop: 20 }}>
-                <strong>Video:</strong> {result.video}
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
