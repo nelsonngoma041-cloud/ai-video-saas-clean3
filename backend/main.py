@@ -3,8 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from openai import OpenAI
 import os
-import requests
-import uuid
 
 app = FastAPI()
 
@@ -66,27 +64,26 @@ Your breakthrough may be closer than you think.
     voice_url = "https://ai-video-saas-clean3-production.up.railway.app"
 
     scenes = [
-    {
-        "title": "HOOK",
-        "image_prompt": f"Cinematic scene about {topic}, dramatic lighting"
-    },
-    {
-        "title": "BODY",
-        "image_prompt": f"Inspirational moment about {topic}, ultra realistic"
-    },
-    {
-        "title": "ENDING",
-        "image_prompt": f"Hopeful ending about {topic}, cinematic atmosphere"
-    }
-]
+        {
+            "title": "HOOK",
+            "image_prompt": f"Cinematic scene about {topic}, dramatic lighting"
+        },
+        {
+            "title": "BODY",
+            "image_prompt": f"Inspirational moment about {topic}, ultra realistic"
+        },
+        {
+            "title": "ENDING",
+            "image_prompt": f"Hopeful ending about {topic}, cinematic atmosphere"
+        }
+    ]
 
-return {
-    "topic": topic,
-    "script": script,
-    "voice": voice_url,
-    "video": "video.mp4",
-    "scenes": scenes
-}
+    return {
+        "topic": topic,
+        "script": script,
+        "voice": voice_url,
+        "video": "video.mp4",
+        "scenes": scenes
     }
 
 @app.get("/audio/{audio_id}")
