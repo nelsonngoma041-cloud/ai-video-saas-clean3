@@ -135,10 +135,28 @@ export default function Home() {
 
             <div style={{ marginTop: 20 }}>
               <p>
-                <strong>Voice:</strong> {result.voice}
+                <strong>Voice URL:</strong>
               </p>
 
-              <p style={{ marginTop: 10 }}>
+              <a
+                href={result.voice}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "#60a5fa",
+                  wordBreak: "break-all",
+                }}
+              >
+                {result.voice}
+              </a>
+
+              <div style={{ marginTop: 20 }}>
+                <audio controls style={{ width: "100%" }}>
+                  <source src={result.voice} type="audio/mpeg" />
+                </audio>
+              </div>
+
+              <p style={{ marginTop: 20 }}>
                 <strong>Video:</strong> {result.video}
               </p>
             </div>
