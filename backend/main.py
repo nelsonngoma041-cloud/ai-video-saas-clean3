@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from openai import OpenAI
 import os
+from PIL import Image, ImageDraw
 
 app = FastAPI()
 
