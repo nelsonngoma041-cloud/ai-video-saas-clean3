@@ -139,3 +139,50 @@ export default function Home() {
               </p>
 
               <a
+                href={result.voice}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "#60a5fa",
+                  wordBreak: "break-all",
+                }}
+              >
+                {result.voice}
+              </a>
+
+              <div style={{ marginTop: 20 }}>
+                <audio controls style={{ width: "100%" }}>
+                  <source src={result.voice} type="audio/mpeg" />
+                </audio>
+              </div>
+
+              <div style={{ marginTop: 15 }}>
+                <a
+                  href={result.voice}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    background: "#22c55e",
+                    color: "white",
+                    padding: "12px 20px",
+                    borderRadius: 10,
+                    textDecoration: "none",
+                    display: "inline-block",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Download Voice
+                </a>
+              </div>
+
+              <p style={{ marginTop: 20 }}>
+                <strong>Video:</strong> {result.video}
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
