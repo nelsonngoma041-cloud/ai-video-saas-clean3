@@ -106,3 +106,13 @@ Your breakthrough may be closer than you think.
         "voice": voice_url,
         "video": "video.mp4"
     }
+
+@app.get("/audio/{audio_id}")
+def get_audio(audio_id: str):
+
+    file_path = f"audio/{audio_id}.mp3"
+
+    return FileResponse(
+        file_path,
+        media_type="audio/mpeg"
+    )
