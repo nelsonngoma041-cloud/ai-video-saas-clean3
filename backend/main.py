@@ -96,9 +96,13 @@ Your breakthrough may be closer than you think.
 
             voice_url = f"https://ai-video-saas-clean3-production.up.railway.app/audio/{audio_id}"
 
+        else:
+
+            print(response.text)
+
     except Exception as e:
 
-    voice_url = str(e)
+        print(e)
 
     return {
         "topic": topic,
