@@ -65,11 +65,28 @@ Your breakthrough may be closer than you think.
 
     voice_url = "https://ai-video-saas-clean3-production.up.railway.app"
 
-    return {
-        "topic": topic,
-        "script": script,
-        "voice": voice_url,
-        "video": "video.mp4"
+    scenes = [
+    {
+        "title": "HOOK",
+        "image_prompt": f"Cinematic scene about {topic}, dramatic lighting"
+    },
+    {
+        "title": "BODY",
+        "image_prompt": f"Inspirational moment about {topic}, ultra realistic"
+    },
+    {
+        "title": "ENDING",
+        "image_prompt": f"Hopeful ending about {topic}, cinematic atmosphere"
+    }
+]
+
+return {
+    "topic": topic,
+    "script": script,
+    "voice": voice_url,
+    "video": "video.mp4",
+    "scenes": scenes
+}
     }
 
 @app.get("/audio/{audio_id}")
