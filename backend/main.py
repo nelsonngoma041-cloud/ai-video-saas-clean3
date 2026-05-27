@@ -63,19 +63,30 @@ Your breakthrough may be closer than you think.
 
     voice_url = "https://ai-video-saas-clean3-production.up.railway.app"
 
-    scenes = [
-        {
-            "title": "HOOK",
-            "image_prompt": f"Cinematic scene about {topic}, dramatic lighting"
-        },
-        {
-            "title": "BODY",
-            "image_prompt": f"Inspirational moment about {topic}, ultra realistic"
-        },
-        {
-            "title": "ENDING",
-            "image_prompt": f"Hopeful ending about {topic}, cinematic atmosphere"
-        }
+    scenes = []
+
+scene_titles = ["HOOK", "BODY", "ENDING"]
+
+for title in scene_titles:
+
+    image_path = f"audio/{title.lower()}.png"
+
+    img = Image.new("RGB", (1024, 1024), color=(30, 41, 59))
+
+    draw = ImageDraw.Draw(img)
+
+    draw.text(
+        (100, 500),
+        f"{title}\\n{topic}",
+        fill=(255, 255, 255)
+    )
+
+    img.save(image_path)
+
+    scenes.append({
+        "title": title,
+        "image": f"https://ai-video-saas-clean3-production.up.railway.app/audio/{title.lower()}.png"
+    })
     ]
 
     return {
