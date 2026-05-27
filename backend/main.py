@@ -98,7 +98,7 @@ Your breakthrough may be closer than you think.
 
         else:
 
-            print(response.text)
+    voice_url = response.text
 
     except Exception as e:
 
