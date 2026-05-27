@@ -96,9 +96,9 @@ Your breakthrough may be closer than you think.
 
             voice_url = f"https://ai-video-saas-clean3-production.up.railway.app/audio/{audio_id}"
 
-    except Exception:
+    except Exception as e:
 
-        pass
+    voice_url = str(e)
 
     return {
         "topic": topic,
