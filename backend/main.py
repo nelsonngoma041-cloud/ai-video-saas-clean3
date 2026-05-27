@@ -63,11 +63,46 @@ ENDING:
 Your breakthrough may be closer than you think.
 """
 
-    voice_status = "AI voice generated successfully"
+    voice_url = "Voice generation failed"
+
+    try:
+
+        audio_id = str(uuid.uuid4())
+
+        file_path = f"audio/{audio_id}.mp3"
+
+        eleven_url = "https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL"
+
+        headers = {
+            "xi-api-key": os.getenv("ELEVENLABS_API_KEY"),
+            "Content-Type": "application/json"
+        }
+
+        data = {
+            "text": script,
+            "model_id": "eleven_multilingual_v2"
+        }
+
+        response = requests.post(
+            eleven_url,
+            json=data,
+            headers=headers
+        )
+
+        if response.status_code == 200:
+
+            with open(file_path, "wb") as f:
+                f.write(response.content)
+
+            voice_url = f"https://ai-video-saas-clean3-production.up.railway.app/audio/{audio_id}"
+
+    except Exception:
+
+        pass
 
     return {
         "topic": topic,
         "script": script,
-        "voice": voice_status,
+        "voice": voice_url,
         "video": "video.mp4"
     }
