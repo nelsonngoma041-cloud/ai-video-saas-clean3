@@ -1,10 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from openai import OpenAI
 import os
 import requests
+import uuid
 
 app = FastAPI()
+
+os.makedirs("audio", exist_ok=True)
 
 client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY")
