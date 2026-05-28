@@ -123,7 +123,7 @@ export default function Home() {
                 lineHeight: 1.8,
               }}
             >
-              Creating script, scenes, visuals, and voice assets...
+              Creating script, scenes, visuals, subtitles, and video assets...
             </p>
           </div>
         )}
@@ -198,10 +198,41 @@ export default function Home() {
                   Download Voice
                 </a>
               </div>
+            </div>
 
-              <p style={{ marginTop: 20 }}>
-                <strong>Video:</strong> {result.video}
-              </p>
+            <div style={{ marginTop: 30 }}>
+              <h3>Generated Video</h3>
+
+              <video
+                controls
+                style={{
+                  width: "100%",
+                  borderRadius: 15,
+                  marginTop: 15,
+                }}
+              >
+                <source src={result.video} type="video/mp4" />
+              </video>
+
+              <div style={{ marginTop: 20 }}>
+                <a
+                  href={result.video}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    background: "#ef4444",
+                    color: "white",
+                    padding: "12px 20px",
+                    borderRadius: 10,
+                    textDecoration: "none",
+                    display: "inline-block",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Download Video
+                </a>
+              </div>
             </div>
 
             <div style={{ marginTop: 30 }}>
@@ -268,4 +299,4 @@ export default function Home() {
       </div>
     </div>
   );
-                  }
+}
