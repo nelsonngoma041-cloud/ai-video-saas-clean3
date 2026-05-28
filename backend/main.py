@@ -91,20 +91,44 @@ Your breakthrough may be closer than you think.
 
         voice_url = "Voice generation failed"
 
-    scenes = [
+    scenes = []
+
+    scene_prompts = [
         {
             "title": "HOOK",
-            "image_prompt": f"Cinematic scene about {topic}, dramatic lighting"
+            "prompt": f"Cinematic dramatic Christian motivation scene about {topic}, ultra realistic, movie lighting"
         },
         {
             "title": "BODY",
-            "image_prompt": f"Inspirational moment about {topic}, ultra realistic"
+            "prompt": f"Inspirational emotional moment about {topic}, cinematic atmosphere, ultra detailed"
         },
         {
             "title": "ENDING",
-            "image_prompt": f"Hopeful ending about {topic}, cinematic atmosphere"
+            "prompt": f"Hopeful powerful ending scene about {topic}, sunrise, cinematic masterpiece"
         }
     ]
+
+    for scene in scene_prompts:
+
+        try:
+
+            image_response = client.images.generate(
+                model="gpt-image-1",
+                prompt=scene["prompt"],
+                size="1024x1024"
+            )
+
+            image_url = image_response.data[0].url
+
+        except Exception:
+
+            image_url = f"https://picsum.photos/seed/{scene['title']}/800/400"
+
+        scenes.append({
+            "title": scene["title"],
+            "image_prompt": scene["prompt"],
+            "image_url": image_url
+        })
 
     subtitles = script.split("\n")
 
