@@ -123,7 +123,7 @@ export default function Home() {
                 lineHeight: 1.8,
               }}
             >
-              Creating script, scenes, visuals, subtitles, and video assets...
+              Creating script, narration, AI visuals, subtitles, and video...
             </p>
           </div>
         )}
@@ -252,7 +252,7 @@ export default function Home() {
                     <h4>{scene.title}</h4>
 
                     <img
-                      src={`https://picsum.photos/seed/${scene.title}/800/400`}
+                      src={scene.image_url}
                       alt={scene.title}
                       style={{
                         width: "100%",
@@ -299,4 +299,4 @@ export default function Home() {
       </div>
     </div>
   );
-}
+                    }
