@@ -101,9 +101,32 @@ export default function Home() {
               fontWeight: "bold",
             }}
           >
-            {loading ? "Generating..." : "Generate"}
+            {loading ? "Generating AI Content..." : "Generate"}
           </button>
         </div>
+
+        {loading && (
+          <div
+            style={{
+              marginTop: 40,
+              background: "#1e293b",
+              padding: 30,
+              borderRadius: 20,
+            }}
+          >
+            <h2>Generating Your AI Video...</h2>
+
+            <p
+              style={{
+                marginTop: 15,
+                color: "#cbd5e1",
+                lineHeight: 1.8,
+              }}
+            >
+              Creating script, scenes, visuals, and voice assets...
+            </p>
+          </div>
+        )}
 
         {result && (
           <div
@@ -223,4 +246,4 @@ export default function Home() {
       </div>
     </div>
   );
-                                                         }
+                }
