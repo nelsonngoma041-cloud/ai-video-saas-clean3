@@ -197,6 +197,16 @@ export default function Home() {
                   >
                     <h4>{scene.title}</h4>
 
+                    <img
+                      src={`https://picsum.photos/seed/${scene.title}/800/400`}
+                      alt={scene.title}
+                      style={{
+                        width: "100%",
+                        borderRadius: 12,
+                        marginTop: 15,
+                      }}
+                    />
+
                     <p
                       style={{
                         color: "#cbd5e1",
@@ -213,4 +223,4 @@ export default function Home() {
       </div>
     </div>
   );
-          }
+                                                         }
