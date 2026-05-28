@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from openai import OpenAI
 import os
+import requests
+import uuid
 
 app = FastAPI()
 
@@ -61,7 +63,33 @@ ENDING:
 Your breakthrough may be closer than you think.
 """
 
-    voice_url = "https://ai-video-saas-clean3-production.up.railway.app"
+    audio_id = str(uuid.uuid4())
+
+    voice_file = f"audio/{audio_id}.mp3"
+
+    try:
+
+        elevenlabs_response = requests.post(
+            "https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb",
+            headers={
+                "Accept": "audio/mpeg",
+                "Content-Type": "application/json",
+                "xi-api-key": os.getenv("ELEVENLABS_API_KEY")
+            },
+            json={
+                "text": script,
+                "model_id": "eleven_multilingual_v2"
+            }
+        )
+
+        with open(voice_file, "wb") as f:
+            f.write(elevenlabs_response.content)
+
+        voice_url = f"https://ai-video-saas-clean3-production.up.railway.app/audio/{audio_id}"
+
+    except Exception:
+
+        voice_url = "Voice generation failed"
 
     scenes = [
         {
