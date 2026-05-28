@@ -84,7 +84,7 @@ Your breakthrough may be closer than you think.
         "topic": topic,
         "script": script,
         "voice": voice_url,
-        "video": "video.mp4",
+        "video": "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
         "scenes": scenes,
         "subtitles": subtitles
     }
