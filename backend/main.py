@@ -78,12 +78,15 @@ Your breakthrough may be closer than you think.
         }
     ]
 
+    subtitles = script.split("\n")
+
     return {
         "topic": topic,
         "script": script,
         "voice": voice_url,
         "video": "video.mp4",
-        "scenes": scenes
+        "scenes": scenes,
+        "subtitles": subtitles
     }
 
 @app.get("/audio/{audio_id}")
