@@ -241,9 +241,31 @@ export default function Home() {
                   </div>
                 ))}
             </div>
+
+            <div style={{ marginTop: 40 }}>
+              <h3>Subtitles</h3>
+
+              {result.subtitles &&
+                result.subtitles.map((line, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      marginTop: 10,
+                      background: "#0f172a",
+                      padding: 15,
+                      borderRadius: 10,
+                      fontSize: 18,
+                      fontWeight: "bold",
+                      color: "#f8fafc",
+                    }}
+                  >
+                    {line}
+                  </div>
+                ))}
+            </div>
           </div>
         )}
       </div>
     </div>
   );
-                }
+                  }
