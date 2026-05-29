@@ -124,7 +124,7 @@ Your breakthrough may be closer than you think.
         voice_url = "Voice generation failed"
 
     # =========================
-    # GENERATE SCENES
+    # SCENE PROMPTS
     # =========================
 
     scenes = []
@@ -145,6 +145,10 @@ Your breakthrough may be closer than you think.
     ]
 
     image_files = []
+
+    # =========================
+    # IMAGE GENERATION
+    # =========================
 
     for index, scene in enumerate(scene_prompts):
 
@@ -185,7 +189,7 @@ Your breakthrough may be closer than you think.
         })
 
     # =========================
-    # CREATE SUBTITLES
+    # CREATE SUBTITLE FILE
     # =========================
 
     video_id = str(uuid.uuid4())
@@ -217,6 +221,10 @@ Your breakthrough may be closer than you think.
 
         temp_video = f"videos/temp_{video_id}.mp4"
 
+        # =========================
+        # CREATE SLIDESHOW
+        # =========================
+
         slideshow_command = [
             "ffmpeg",
             "-y",
@@ -235,7 +243,13 @@ Your breakthrough may be closer than you think.
             temp_video
         ]
 
-        subprocess.run(slideshow_command)
+        subprocess.run(slideshow_command, check=True)
+
+        # =========================
+        # ADD AUDIO + SUBTITLES
+        # =========================
+
+        subtitle_filter = f"subtitles='{subtitle_file}'"
 
         final_command = [
             "ffmpeg",
@@ -245,7 +259,7 @@ Your breakthrough may be closer than you think.
             "-i",
             voice_file,
             "-vf",
-            f"subtitles={subtitle_file}",
+            subtitle_filter,
             "-c:v",
             "libx264",
             "-c:a",
@@ -254,11 +268,13 @@ Your breakthrough may be closer than you think.
             video_file
         ]
 
-        subprocess.run(final_command)
+        subprocess.run(final_command, check=True)
 
         video_url = f"https://ai-video-saas-clean3-production.up.railway.app/video/{video_id}"
 
-    except Exception:
+    except Exception as e:
+
+        print("VIDEO ERROR:", e)
 
         video_url = "Video generation failed"
 
@@ -299,4 +315,4 @@ def get_video(video_id: str):
     return FileResponse(
         file_path,
         media_type="video/mp4"
-    )
+                    )
