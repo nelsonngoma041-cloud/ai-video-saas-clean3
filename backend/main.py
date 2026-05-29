@@ -9,14 +9,26 @@ import subprocess
 
 app = FastAPI()
 
+# =========================
+# CREATE FOLDERS
+# =========================
+
 os.makedirs("audio", exist_ok=True)
 os.makedirs("videos", exist_ok=True)
 os.makedirs("images", exist_ok=True)
-os.makedirs("subtitles", exist_ok=True)
+os.makedirs("srt_files", exist_ok=True)
+
+# =========================
+# OPENAI CLIENT
+# =========================
 
 client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY")
 )
+
+# =========================
+# CORS
+# =========================
 
 app.add_middleware(
     CORSMiddleware,
@@ -26,14 +38,26 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# =========================
+# HOME ROUTE
+# =========================
+
 @app.get("/")
 def home():
     return {
         "status": "AI Video SaaS Running"
     }
 
+# =========================
+# GENERATE VIDEO
+# =========================
+
 @app.post("/generate")
 def generate(topic: str):
+
+    # =========================
+    # AI SCRIPT
+    # =========================
 
     try:
 
@@ -42,11 +66,11 @@ def generate(topic: str):
             messages=[
                 {
                     "role": "system",
-                    "content": "You create short viral TikTok video scripts."
+                    "content": "You create viral TikTok video scripts."
                 },
                 {
                     "role": "user",
-                    "content": f"Create a TikTok script about {topic}"
+                    "content": f"Create a motivational TikTok script about {topic}"
                 }
             ]
         )
@@ -66,6 +90,10 @@ Keep trusting God and keep moving forward.
 ENDING:
 Your breakthrough may be closer than you think.
 """
+
+    # =========================
+    # GENERATE VOICE
+    # =========================
 
     audio_id = str(uuid.uuid4())
 
@@ -94,6 +122,10 @@ Your breakthrough may be closer than you think.
     except Exception:
 
         voice_url = "Voice generation failed"
+
+    # =========================
+    # GENERATE SCENES
+    # =========================
 
     scenes = []
 
@@ -135,7 +167,7 @@ Your breakthrough may be closer than you think.
 
         except Exception:
 
-            image_url = f"https://picsum.photos/seed/{scene['title']}/800/400"
+            image_url = f"https://picsum.photos/seed/{scene['title']}/800/800"
 
             image_path = f"images/fallback_{index}.jpg"
 
@@ -152,11 +184,13 @@ Your breakthrough may be closer than you think.
             "image_url": image_url
         })
 
+    # =========================
+    # CREATE SUBTITLES
+    # =========================
+
     video_id = str(uuid.uuid4())
 
-    video_file = f"videos/{video_id}.mp4"
-
-    subtitle_file = f"subtitles/{video_id}.srt"
+    subtitle_file = f"srt_files/{video_id}.srt"
 
     subtitle_content = f"""1
 00:00:00,000 --> 00:00:15,000
@@ -165,6 +199,12 @@ Your breakthrough may be closer than you think.
 
     with open(subtitle_file, "w") as f:
         f.write(subtitle_content)
+
+    # =========================
+    # CREATE VIDEO
+    # =========================
+
+    video_file = f"videos/{video_id}.mp4"
 
     try:
 
@@ -186,12 +226,10 @@ Your breakthrough may be closer than you think.
             "0",
             "-i",
             input_txt,
-            "-vsync",
-            "vfr",
-            "-pix_fmt",
-            "yuv420p",
             "-vf",
             "scale=1080:1920",
+            "-pix_fmt",
+            "yuv420p",
             "-c:v",
             "libx264",
             temp_video
@@ -235,6 +273,10 @@ Your breakthrough may be closer than you think.
         "subtitles": subtitles
     }
 
+# =========================
+# AUDIO ROUTE
+# =========================
+
 @app.get("/audio/{audio_id}")
 def get_audio(audio_id: str):
 
@@ -244,6 +286,10 @@ def get_audio(audio_id: str):
         file_path,
         media_type="audio/mpeg"
     )
+
+# =========================
+# VIDEO ROUTE
+# =========================
 
 @app.get("/video/{video_id}")
 def get_video(video_id: str):
