@@ -5,10 +5,13 @@ from openai import OpenAI
 import os
 import requests
 import uuid
+import subprocess
 
 app = FastAPI()
 
 os.makedirs("audio", exist_ok=True)
+os.makedirs("videos", exist_ok=True)
+os.makedirs("images", exist_ok=True)
 
 client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY")
@@ -108,7 +111,9 @@ Your breakthrough may be closer than you think.
         }
     ]
 
-    for scene in scene_prompts:
+    image_files = []
+
+    for index, scene in enumerate(scene_prompts):
 
         try:
 
@@ -120,9 +125,25 @@ Your breakthrough may be closer than you think.
 
             image_url = image_response.data[0].url
 
+            image_data = requests.get(image_url).content
+
+            image_path = f"images/{uuid.uuid4()}.png"
+
+            with open(image_path, "wb") as f:
+                f.write(image_data)
+
         except Exception:
 
             image_url = f"https://picsum.photos/seed/{scene['title']}/800/400"
+
+            image_path = f"images/fallback_{index}.jpg"
+
+            image_data = requests.get(image_url).content
+
+            with open(image_path, "wb") as f:
+                f.write(image_data)
+
+        image_files.append(image_path)
 
         scenes.append({
             "title": scene["title"],
@@ -130,13 +151,55 @@ Your breakthrough may be closer than you think.
             "image_url": image_url
         })
 
+    video_id = str(uuid.uuid4())
+
+    video_file = f"videos/{video_id}.mp4"
+
+    try:
+
+        input_txt = "videos/input.txt"
+
+        with open(input_txt, "w") as f:
+            for image in image_files:
+                f.write(f"file '{image}'\n")
+                f.write("duration 3\n")
+
+        ffmpeg_command = [
+            "ffmpeg",
+            "-y",
+            "-f",
+            "concat",
+            "-safe",
+            "0",
+            "-i",
+            input_txt,
+            "-i",
+            voice_file,
+            "-vsync",
+            "vfr",
+            "-pix_fmt",
+            "yuv420p",
+            "-c:v",
+            "libx264",
+            "-shortest",
+            video_file
+        ]
+
+        subprocess.run(ffmpeg_command)
+
+        video_url = f"https://ai-video-saas-clean3-production.up.railway.app/video/{video_id}"
+
+    except Exception:
+
+        video_url = "Video generation failed"
+
     subtitles = script.split("\n")
 
     return {
         "topic": topic,
         "script": script,
         "voice": voice_url,
-        "video": "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
+        "video": video_url,
         "scenes": scenes,
         "subtitles": subtitles
     }
@@ -149,4 +212,14 @@ def get_audio(audio_id: str):
     return FileResponse(
         file_path,
         media_type="audio/mpeg"
+    )
+
+@app.get("/video/{video_id}")
+def get_video(video_id: str):
+
+    file_path = f"videos/{video_id}.mp4"
+
+    return FileResponse(
+        file_path,
+        media_type="video/mp4"
     )
