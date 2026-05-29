@@ -76,7 +76,9 @@ def generate(topic: str):
 
         script = response.choices[0].message.content
 
-    except Exception:
+    except Exception as e:
+
+        print("SCRIPT ERROR:", e)
 
         script = """
 HOOK:
@@ -118,7 +120,9 @@ Your breakthrough may be closer than you think.
 
         voice_url = f"https://ai-video-saas-clean3-production.up.railway.app/audio/{audio_id}"
 
-    except Exception:
+    except Exception as e:
+
+        print("VOICE ERROR:", e)
 
         voice_url = "Voice generation failed"
 
@@ -168,7 +172,9 @@ Your breakthrough may be closer than you think.
             with open(image_path, "wb") as f:
                 f.write(image_data)
 
-        except Exception:
+        except Exception as e:
+
+            print("IMAGE ERROR:", e)
 
             image_url = f"https://picsum.photos/seed/{scene['title']}/800/800"
 
@@ -230,8 +236,10 @@ Your breakthrough may be closer than you think.
 
         subprocess.run(slideshow_command, check=True)
 
+        print("TEMP VIDEO CREATED:", temp_video)
+
         # =========================
-        # ADD AUDIO
+        # MERGE AUDIO + VIDEO
         # =========================
 
         final_command = [
@@ -250,6 +258,13 @@ Your breakthrough may be closer than you think.
         ]
 
         subprocess.run(final_command, check=True)
+
+        print("FINAL VIDEO CREATED:", video_file)
+
+        if os.path.exists(video_file):
+            print("VIDEO EXISTS SUCCESSFULLY")
+        else:
+            print("VIDEO FILE MISSING")
 
         video_url = f"https://ai-video-saas-clean3-production.up.railway.app/video/{video_id}"
 
@@ -279,9 +294,15 @@ def get_audio(audio_id: str):
 
     file_path = f"audio/{audio_id}.mp3"
 
+    if not os.path.exists(file_path):
+        return {
+            "error": "Audio not found"
+        }
+
     return FileResponse(
-        file_path,
-        media_type="audio/mpeg"
+        path=file_path,
+        media_type="audio/mpeg",
+        filename=f"{audio_id}.mp3"
     )
 
 # =========================
@@ -293,7 +314,20 @@ def get_video(video_id: str):
 
     file_path = f"videos/{video_id}.mp4"
 
+    print("LOOKING FOR VIDEO:", file_path)
+
+    if not os.path.exists(file_path):
+
+        print("VIDEO NOT FOUND")
+
+        return {
+            "error": "Video file not found"
+        }
+
+    print("VIDEO FOUND SUCCESSFULLY")
+
     return FileResponse(
-        file_path,
-        media_type="video/mp4"
+        path=file_path,
+        media_type="video/mp4",
+        filename=f"{video_id}.mp4"
     )
