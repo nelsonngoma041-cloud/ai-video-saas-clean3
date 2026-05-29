@@ -12,6 +12,7 @@ app = FastAPI()
 os.makedirs("audio", exist_ok=True)
 os.makedirs("videos", exist_ok=True)
 os.makedirs("images", exist_ok=True)
+os.makedirs("subtitles", exist_ok=True)
 
 client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY")
@@ -155,6 +156,16 @@ Your breakthrough may be closer than you think.
 
     video_file = f"videos/{video_id}.mp4"
 
+    subtitle_file = f"subtitles/{video_id}.srt"
+
+    subtitle_content = f"""1
+00:00:00,000 --> 00:00:15,000
+{script}
+"""
+
+    with open(subtitle_file, "w") as f:
+        f.write(subtitle_content)
+
     try:
 
         input_txt = "videos/input.txt"
@@ -164,7 +175,9 @@ Your breakthrough may be closer than you think.
                 f.write(f"file '{image}'\n")
                 f.write("duration 3\n")
 
-        ffmpeg_command = [
+        temp_video = f"videos/temp_{video_id}.mp4"
+
+        slideshow_command = [
             "ffmpeg",
             "-y",
             "-f",
@@ -173,19 +186,37 @@ Your breakthrough may be closer than you think.
             "0",
             "-i",
             input_txt,
-            "-i",
-            voice_file,
             "-vsync",
             "vfr",
             "-pix_fmt",
             "yuv420p",
+            "-vf",
+            "scale=1080:1920",
             "-c:v",
             "libx264",
+            temp_video
+        ]
+
+        subprocess.run(slideshow_command)
+
+        final_command = [
+            "ffmpeg",
+            "-y",
+            "-i",
+            temp_video,
+            "-i",
+            voice_file,
+            "-vf",
+            f"subtitles={subtitle_file}",
+            "-c:v",
+            "libx264",
+            "-c:a",
+            "aac",
             "-shortest",
             video_file
         ]
 
-        subprocess.run(ffmpeg_command)
+        subprocess.run(final_command)
 
         video_url = f"https://ai-video-saas-clean3-production.up.railway.app/video/{video_id}"
 
