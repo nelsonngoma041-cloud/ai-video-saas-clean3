@@ -16,7 +16,6 @@ app = FastAPI()
 os.makedirs("audio", exist_ok=True)
 os.makedirs("videos", exist_ok=True)
 os.makedirs("images", exist_ok=True)
-os.makedirs("srt_files", exist_ok=True)
 
 # =========================
 # OPENAI CLIENT
@@ -189,24 +188,10 @@ Your breakthrough may be closer than you think.
         })
 
     # =========================
-    # CREATE SUBTITLE FILE
+    # CREATE VIDEO
     # =========================
 
     video_id = str(uuid.uuid4())
-
-    subtitle_file = f"srt_files/{video_id}.srt"
-
-    subtitle_content = f"""1
-00:00:00,000 --> 00:00:15,000
-{script}
-"""
-
-    with open(subtitle_file, "w") as f:
-        f.write(subtitle_content)
-
-    # =========================
-    # CREATE VIDEO
-    # =========================
 
     video_file = f"videos/{video_id}.mp4"
 
@@ -246,10 +231,8 @@ Your breakthrough may be closer than you think.
         subprocess.run(slideshow_command, check=True)
 
         # =========================
-        # ADD AUDIO + SUBTITLES
+        # ADD AUDIO
         # =========================
-
-        subtitle_filter = f"subtitles='{subtitle_file}'"
 
         final_command = [
             "ffmpeg",
@@ -258,10 +241,8 @@ Your breakthrough may be closer than you think.
             temp_video,
             "-i",
             voice_file,
-            "-vf",
-            subtitle_filter,
             "-c:v",
-            "libx264",
+            "copy",
             "-c:a",
             "aac",
             "-shortest",
@@ -315,4 +296,4 @@ def get_video(video_id: str):
     return FileResponse(
         file_path,
         media_type="video/mp4"
-                    )
+    )
