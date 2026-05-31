@@ -48,6 +48,32 @@ def home():
     }
 
 # =========================
+# FFMPEG TEST ROUTE
+# =========================
+
+@app.get("/ffmpeg-test")
+def ffmpeg_test():
+
+    try:
+
+        result = subprocess.run(
+            ["ffmpeg", "-version"],
+            capture_output=True,
+            text=True
+        )
+
+        return {
+            "success": True,
+            "output": result.stdout[:1000]
+        }
+
+    except Exception as e:
+
+        return {
+            "success": False,
+            "error": str(e)
+        }
+# =========================
 # GENERATE VIDEO
 # =========================
 
