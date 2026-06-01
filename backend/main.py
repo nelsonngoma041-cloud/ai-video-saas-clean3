@@ -260,7 +260,17 @@ Your breakthrough may be closer than you think.
             temp_video
         ]
 
-        subprocess.run(slideshow_command, check=True)
+        result = subprocess.run(
+    slideshow_command,
+    capture_output=True,
+    text=True
+)
+
+print("SLIDESHOW RETURN CODE:", result.returncode)
+print("SLIDESHOW STDOUT:")
+print(result.stdout)
+print("SLIDESHOW STDERR:")
+print(result.stderr)
 
         print("TEMP VIDEO CREATED:", temp_video)
 
@@ -283,7 +293,17 @@ Your breakthrough may be closer than you think.
             video_file
         ]
 
-        subprocess.run(final_command, check=True)
+        result = subprocess.run(
+    final_command,
+    capture_output=True,
+    text=True
+)
+
+print("FINAL VIDEO RETURN CODE:", result.returncode)
+print("FINAL VIDEO STDOUT:")
+print(result.stdout)
+print("FINAL VIDEO STDERR:")
+print(result.stderr)
 
         print("FINAL VIDEO CREATED:", video_file)
 
