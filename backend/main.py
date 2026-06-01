@@ -312,14 +312,16 @@ Your breakthrough may be closer than you think.
 
         video_url = "Video generation failed"
 
-    return {
-        "topic": topic,
-        "script": script,
-        "voice": voice_url,
-        "video": video_url,
-        "scenes": scenes,
-        "subtitles": subtitles
-    }
+    subtitles = script.split("\n")
+
+return {
+    "topic": topic,
+    "script": script,
+    "voice": voice_url,
+    "video": video_url,
+    "scenes": scenes,
+    "subtitles": subtitles
+}
 
 # =========================
 # AUDIO ROUTE
