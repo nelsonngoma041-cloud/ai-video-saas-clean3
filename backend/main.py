@@ -308,20 +308,20 @@ Your breakthrough may be closer than you think.
 
     except Exception as e:
 
-        print("VIDEO ERROR:", e)
+    print("VIDEO ERROR:", e)
 
-        video_url = "Video generation failed"
+    video_url = "Video generation failed"
 
     subtitles = script.split("\n")
 
-return {
-    "topic": topic,
-    "script": script,
-    "voice": voice_url,
-    "video": video_url,
-    "scenes": scenes,
-    "subtitles": subtitles
-}
+    return {
+        "topic": topic,
+        "script": script,
+        "voice": voice_url,
+        "video": video_url,
+        "scenes": scenes,
+        "subtitles": subtitles
+    }
 
 # =========================
 # AUDIO ROUTE
