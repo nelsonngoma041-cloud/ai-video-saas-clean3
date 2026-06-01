@@ -238,10 +238,6 @@ Your breakthrough may be closer than you think.
 
         temp_video = f"videos/temp_{video_id}.mp4"
 
-        # =========================
-        # CREATE SLIDESHOW
-        # =========================
-
         slideshow_command = [
             "ffmpeg",
             "-y",
@@ -261,22 +257,16 @@ Your breakthrough may be closer than you think.
         ]
 
         result = subprocess.run(
-    slideshow_command,
-    capture_output=True,
-    text=True
-)
+            slideshow_command,
+            capture_output=True,
+            text=True
+        )
 
-print("SLIDESHOW RETURN CODE:", result.returncode)
-print("SLIDESHOW STDOUT:")
-print(result.stdout)
-print("SLIDESHOW STDERR:")
-print(result.stderr)
-
-        print("TEMP VIDEO CREATED:", temp_video)
-
-        # =========================
-        # MERGE AUDIO + VIDEO
-        # =========================
+        print("SLIDESHOW RETURN CODE:", result.returncode)
+        print("SLIDESHOW STDOUT:")
+        print(result.stdout)
+        print("SLIDESHOW STDERR:")
+        print(result.stderr)
 
         final_command = [
             "ffmpeg",
@@ -294,35 +284,33 @@ print(result.stderr)
         ]
 
         result = subprocess.run(
-    final_command,
-    capture_output=True,
-    text=True
-)
+            final_command,
+            capture_output=True,
+            text=True
+        )
 
-print("FINAL VIDEO RETURN CODE:", result.returncode)
-print("FINAL VIDEO STDOUT:")
-print(result.stdout)
-print("FINAL VIDEO STDERR:")
-print(result.stderr)
+        print("FINAL VIDEO RETURN CODE:", result.returncode)
+        print("FINAL VIDEO STDOUT:")
+        print(result.stdout)
+        print("FINAL VIDEO STDERR:")
+        print(result.stderr)
 
-        print("FINAL VIDEO CREATED:", video_file)
+        print("VIDEO EXISTS:", os.path.exists(video_file))
 
-print("VIDEO EXISTS:", os.path.exists(video_file))
+        if os.path.exists(video_file):
+            print("VIDEO EXISTS SUCCESSFULLY")
+        else:
+            print("VIDEO FILE MISSING")
 
-if os.path.exists(video_file):
-    print("VIDEO EXISTS SUCCESSFULLY")
-else:
-    print("VIDEO FILE MISSING")
-
-        video_url = f"https://ai-video-saas-clean3-production.up.railway.app/video/{video_id}"
+        video_url = (
+            f"https://ai-video-saas-clean3-production.up.railway.app/video/{video_id}"
+        )
 
     except Exception as e:
 
         print("VIDEO ERROR:", e)
 
         video_url = "Video generation failed"
-
-    subtitles = script.split("\n")
 
     return {
         "topic": topic,
