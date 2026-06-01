@@ -308,9 +308,9 @@ Your breakthrough may be closer than you think.
 
     except Exception as e:
 
-    print("VIDEO ERROR:", e)
+        print("VIDEO ERROR:", e)
 
-    video_url = "Video generation failed"
+        video_url = "Video generation failed"
 
     subtitles = script.split("\n")
 
