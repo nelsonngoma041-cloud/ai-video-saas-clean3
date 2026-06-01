@@ -307,10 +307,12 @@ print(result.stderr)
 
         print("FINAL VIDEO CREATED:", video_file)
 
-        if os.path.exists(video_file):
-            print("VIDEO EXISTS SUCCESSFULLY")
-        else:
-            print("VIDEO FILE MISSING")
+print("VIDEO EXISTS:", os.path.exists(video_file))
+
+if os.path.exists(video_file):
+    print("VIDEO EXISTS SUCCESSFULLY")
+else:
+    print("VIDEO FILE MISSING")
 
         video_url = f"https://ai-video-saas-clean3-production.up.railway.app/video/{video_id}"
 
